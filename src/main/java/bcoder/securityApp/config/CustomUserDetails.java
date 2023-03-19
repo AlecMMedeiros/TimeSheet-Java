@@ -1,6 +1,8 @@
 package bcoder.securityApp.config;
 
+import bcoder.securityApp.model.StaffModel;
 import bcoder.securityApp.model.UserModel;
+import bcoder.securityApp.repository.StaffRepository;
 import bcoder.securityApp.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,10 +19,13 @@ import java.util.List;
 public class CustomUserDetails implements UserDetailsService {
 
   private final UserRepository userRepository;
+  private final StaffRepository staffRepository;
 
-  public CustomUserDetails ( UserRepository customerRepository ) {
+  public CustomUserDetails ( UserRepository customerRepository , StaffRepository staffRepository) {
     this.userRepository = customerRepository;
+    this.staffRepository = staffRepository;
   }
+
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,9 +33,17 @@ public class CustomUserDetails implements UserDetailsService {
     List<GrantedAuthority> authorities = null;
     List< UserModel > customer = userRepository.findByLogin ( username);
     if (customer.size() == 0) {
-      throw new UsernameNotFoundException("User details not found for the user : " + username);
+      List< StaffModel > staff = staffRepository.findByLogin ( username);
+      if(staff.size() == 0)
+        throw new UsernameNotFoundException("User details not found for the user : " + username);
+      else {
+        userName = staff.get(0).getLogin ();
+        password = staff.get(0).getPassword ();
+        authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("staff"));
+      }
     } else{
-      userName = customer.get(0).getEmail();
+      userName = customer.get(0).getLogin ();
       password = customer.get(0).getPassword ();
       authorities = new ArrayList<>();
       authorities.add(new SimpleGrantedAuthority(customer.get(0).getRole()));
