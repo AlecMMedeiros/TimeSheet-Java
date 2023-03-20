@@ -18,7 +18,7 @@ public class StaffModel {
   @Column(length = 20, nullable = false, unique = true)
   @NotNull
   private String login;
-  @Column(length = 12, nullable = false)
+  @Column(length = 100, nullable = false)
   @NotNull
   private String password;
 

@@ -1,7 +1,9 @@
 package bcoder.securityApp.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -21,7 +23,7 @@ public class UserModel {
   @Column(length = 20, nullable = false, unique = true)
   @NotNull
   private String username;
-  @Column(length = 12, nullable = false)
+  @Column(length = 100, nullable = false)
   @NotNull
   private String password;
   @Column(length = 20, nullable = false)
