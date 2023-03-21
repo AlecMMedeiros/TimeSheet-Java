@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ContactController {
-
-  ContactService contactService;
+  private final ContactService contactService;
 
   public ContactController ( ContactService contactService ) {
     this.contactService = contactService;
@@ -15,7 +14,7 @@ public class ContactController {
 
   @GetMapping("/contact")
   public String saveContactInquiryDetails ( ) {
-    return contactService.saveContactInquiryDetails ();
+    return contactService.saveContactInquiryDetails();
   }
 
 }

@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class NoticesController {
+  private final NoticesService noticesService;
 
-  NoticesService noticesService;
+  public NoticesController ( NoticesService noticesService ) {
+    this.noticesService = noticesService;
+  }
 
   @GetMapping("/notices")
   public String getNotices() {

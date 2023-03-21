@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoansController {
+  private final LoansService loansService;
 
-  LoansService loansService;
+  public LoansController ( LoansService loansService ) {
+    this.loansService = loansService;
+  }
 
   @GetMapping("/myLoans")
   public String getLoanDetails() {

@@ -18,12 +18,20 @@ public class ProjectSecurityConfig {
       "/myCards"
   };
 
+  public static final String[] ENDPOINTS_PERMIT_ALL = {
+      "/notices",
+      "/contact",
+      "/register",
+      "/v3/api-docs/**",
+      "/swagger-ui/**"
+  };
+
   @Bean
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     http.csrf().disable()
         .authorizeHttpRequests()
         .requestMatchers(ENDPOINTS_AUTHORIZED).authenticated()
-        .requestMatchers("/notices","/contact","/register").permitAll()
+        .requestMatchers(ENDPOINTS_PERMIT_ALL).permitAll()
         .and().formLogin()
         .and().httpBasic();
     return http.build();
@@ -31,7 +39,7 @@ public class ProjectSecurityConfig {
 
   @Bean
   public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder (12  );
+    return new BCryptPasswordEncoder (12 );
   }
 
 }

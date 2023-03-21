@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CardsController {
 
-  CardsService cardsService;
+  private final CardsService cardsService;
 
   public CardsController ( CardsService cardsService ) {
     this.cardsService = cardsService;
