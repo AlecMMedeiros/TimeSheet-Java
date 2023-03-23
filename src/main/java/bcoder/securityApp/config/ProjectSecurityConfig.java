@@ -11,6 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 
@@ -34,6 +36,10 @@ public class ProjectSecurityConfig {
       "/swagger-ui/**"
   };
 
+  public static final RequestMatcher[] ignoringRequestMatchers = {
+      new AntPathRequestMatcher("/contact"),
+  };
+
   @Bean
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     CsrfTokenRequestAttributeHandler requestAttributeHandler = new CsrfTokenRequestAttributeHandler();
@@ -46,7 +52,7 @@ public class ProjectSecurityConfig {
       configuration.setMaxAge(3600L);
       return configuration;
     }).and()
-        .csrf((csrf)-> csrf.csrfTokenRequestHandler(requestAttributeHandler).ignoringRequestMatchers(ENDPOINTS_PERMIT_ALL )
+        .csrf((csrf)-> csrf.csrfTokenRequestHandler(requestAttributeHandler).ignoringRequestMatchers(ignoringRequestMatchers )
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .authorizeHttpRequests()
