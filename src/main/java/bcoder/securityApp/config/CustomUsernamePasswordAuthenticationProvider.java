@@ -34,7 +34,7 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
   public Authentication authenticate ( Authentication authentication ) throws AuthenticationException {
     String username = authentication.getName ( );
     String password = authentication.getCredentials ( ).toString ( );
-    List < UserModel > user = userRepository.findByLogin ( username );
+    List < UserModel > user = userRepository.findByEmail ( username );
     if (user.size ( ) == 0) {
         List < StaffModel > staff = staffRepository.findByLogin ( username );
         if (staff.size ( ) > 0) {

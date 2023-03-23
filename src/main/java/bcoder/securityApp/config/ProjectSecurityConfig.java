@@ -22,22 +22,15 @@ import java.util.Collections;
 public class ProjectSecurityConfig {
 
   public static final String[] ENDPOINTS_AUTHORIZED = {
-      "/myAccount",
-      "/myBalance",
-      "/myLoans",
-      "/myCards"
+      "/admin/**"
   };
 
   public static final String[] ENDPOINTS_PERMIT_ALL = {
-      "/notices",
-      "/contact",
-      "/register",
       "/v3/api-docs/**",
       "/swagger-ui/**"
   };
 
   public static final RequestMatcher[] ignoringRequestMatchers = {
-      new AntPathRequestMatcher("/contact"),
   };
 
   @Bean
