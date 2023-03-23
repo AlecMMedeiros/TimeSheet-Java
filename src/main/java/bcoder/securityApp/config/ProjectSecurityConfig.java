@@ -22,7 +22,8 @@ import java.util.Collections;
 public class ProjectSecurityConfig {
 
   public static final String[] ENDPOINTS_AUTHORIZED = {
-      "/admin/**"
+      "/admin/**",
+      "/jobs/**"
   };
 
   public static final String[] ENDPOINTS_PERMIT_ALL = {

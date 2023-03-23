@@ -34,8 +34,8 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
   public Authentication authenticate ( Authentication authentication ) throws AuthenticationException {
     String username = authentication.getName ( );
     String password = authentication.getCredentials ( ).toString ( );
-    List < UserModel > user = userRepository.findByEmail ( username );
-    if (user.size ( ) == 0) {
+    UserModel user = userRepository.findByEmail ( username );
+    if (user == null) {
         List < StaffModel > staff = staffRepository.findByLogin ( username );
         if (staff.size ( ) > 0) {
           return getAuthentication ( username , password , staff , passwordEncoder );
@@ -44,9 +44,9 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
           throw new BadCredentialsException ( "No user registered with this details!" );
         }
       }
-    if (passwordEncoder.matches ( password , user.get ( 0 ).getPassword ( ) )) {
+    if (passwordEncoder.matches ( password , user.getPassword ( ) )) {
       List < GrantedAuthority > authorities = new ArrayList <> ( );
-      authorities.add ( new SimpleGrantedAuthority ( user.get ( 0 ).getRole ( ) ) );
+      authorities.add ( new SimpleGrantedAuthority ( user.getRole ( ) ) );
       return new UsernamePasswordAuthenticationToken ( username , password , authorities );
     }
     return authentication;

@@ -1,10 +1,19 @@
 package bcoder.securityApp.dto;
 
+import bcoder.securityApp.model.UserModel;
+
 public class UserWithoutPasswordDTO {
   private Long id;
   private String email;
   private String displayName;
   private String role;
+
+  public UserWithoutPasswordDTO ( UserModel userModel ) {
+    this.id = userModel.getId();
+    this.email = userModel.getEmail();
+    this.displayName = userModel.getDisplayName();
+    this.role = userModel.getRole();
+  }
 
   public UserWithoutPasswordDTO ( Long id, String email, String displayName, String role ) {
     this.id = id;

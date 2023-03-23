@@ -1,10 +1,7 @@
 package bcoder.securityApp.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "users")

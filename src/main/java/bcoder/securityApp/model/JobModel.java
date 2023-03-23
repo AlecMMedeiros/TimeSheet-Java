@@ -16,10 +16,10 @@ public class JobModel {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @NotNull
-  @Column(length = 255, nullable = false)
+  @Column(nullable = false)
   private String title;
   @NotNull
-  @Column(length = 255, nullable = false)
+  @Column(nullable = false)
   private String description;
   @NotNull
   @Column(length = 20, nullable = false)
@@ -39,7 +39,15 @@ public class JobModel {
   )
   private Set<UserModel> users;
 
-  public JobModel (String title, String description, Integer os, String status, LocalDateTime createdAt, LocalDateTime updatedAt, Set<UserModel> users ) {
+  public Set<UserModel> getUsers () {
+    return users;
+  }
+
+  public void setUsers ( Set<UserModel> users ) {
+    this.users = users;
+  }
+
+  public JobModel ( String title, String description, Integer os, String status, LocalDateTime createdAt, LocalDateTime updatedAt, Set<UserModel> users ) {
     this.title = title;
     this.description = description;
     this.os = os;

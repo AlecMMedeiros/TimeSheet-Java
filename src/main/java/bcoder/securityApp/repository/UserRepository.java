@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<UserModel, Long> {
-  List < UserModel > findByEmail( String email);
+  UserModel findByEmail( String email);
+
   @Query("SELECT new bcoder.securityApp.dto.UserWithoutPasswordDTO(u.id, u.email, u.displayName, u.role) FROM UserModel u")
   List<UserWithoutPasswordDTO> findAllWithoutPassword();
 
