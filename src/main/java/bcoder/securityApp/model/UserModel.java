@@ -1,5 +1,6 @@
 package bcoder.securityApp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 
@@ -13,6 +14,8 @@ public class UserModel {
   private String email;
   @Column(length = 64, nullable = false, unique = true)
   private String displayName;
+
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @Column(length = 64, nullable = false, unique = true)
   private String password;
   @Column(length = 64, nullable = false)

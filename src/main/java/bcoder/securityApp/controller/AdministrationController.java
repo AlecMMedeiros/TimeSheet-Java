@@ -1,6 +1,5 @@
 package bcoder.securityApp.controller;
 
-import bcoder.securityApp.dto.UserWithoutPasswordDTO;
 import bcoder.securityApp.model.UserModel;
 import bcoder.securityApp.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +17,12 @@ public class AdministrationController {
   }
 
   @GetMapping("/users")
-  public List<UserWithoutPasswordDTO> listUsers(){
+  public List<UserModel> listUsers(){
     return userService.listUsers();
   }
 
   @PostMapping("/users/register")
-  public ResponseEntity registerUser( @RequestBody UserModel newUser) throws Exception {
+  public ResponseEntity registerUser( @RequestBody UserModel newUser){
     return  userService.createUser(newUser);
   }
 }

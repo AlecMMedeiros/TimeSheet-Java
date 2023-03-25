@@ -1,7 +1,6 @@
 package bcoder.securityApp.controller;
 
-import bcoder.securityApp.dto.UserJobDTO;
-import bcoder.securityApp.repository.UserRepository;
+import bcoder.securityApp.model.JobModel;
 import bcoder.securityApp.service.JobService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +11,10 @@ import java.security.Principal;
 @RequestMapping("/jobs")
 public class JobController {
   private final JobService jobService;
-  private final UserRepository userRepository;
 
 
-  public JobController ( JobService jobService, UserRepository userRepository ) {
+  public JobController ( JobService jobService) {
     this.jobService = jobService;
-    this.userRepository = userRepository;
   }
 
   @GetMapping
@@ -26,9 +23,8 @@ public class JobController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity createJob( @RequestBody UserJobDTO job, Principal principal) {
-    ResponseEntity createdJob = jobService.createJob(job, principal.getName());
-    return createdJob;
+  public ResponseEntity createJob( @RequestBody JobModel job, Principal principal) {
+    return jobService.createJob( job, principal.getName());
   }
 }
 

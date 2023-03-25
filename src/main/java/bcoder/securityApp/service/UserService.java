@@ -1,6 +1,5 @@
 package bcoder.securityApp.service;
 
-import bcoder.securityApp.dto.UserWithoutPasswordDTO;
 import bcoder.securityApp.model.UserModel;
 import bcoder.securityApp.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -19,12 +18,13 @@ public class UserService {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
   }
-  public List<UserWithoutPasswordDTO> listUsers (){
-    return userRepository.findAllWithoutPassword();
-  };
+  public List<UserModel> listUsers (){
+    return userRepository.findAll ();
+  }
 
-  public ResponseEntity createUser( UserModel newUser ) throws Exception{
-    UserModel savedUser = null;
+
+  public ResponseEntity createUser( UserModel newUser ) {
+    UserModel savedUser;
     ResponseEntity response = null;
     try {
       String hashPwd = passwordEncoder.encode ( newUser.getPassword () );
@@ -33,10 +33,10 @@ public class UserService {
       if(savedUser.getId () > 0) {
         response = ResponseEntity
             .status ( HttpStatus.CREATED )
-            .body ( "Give user details are successfully registered" );
+            .body (savedUser);
       }
     }catch (Exception exception){
-      response = ResponseEntity
+      return ResponseEntity
           .status ( HttpStatus.INTERNAL_SERVER_ERROR )
           .body ( "An exception occurred due to " + exception.getMessage () );
     }
