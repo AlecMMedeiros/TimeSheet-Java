@@ -33,11 +33,29 @@ public class JobModel {
   private LocalDateTime updatedAt;
   @ManyToMany
   @JoinTable(
+      name = "job_activities",
+      joinColumns = @JoinColumn(name = "job_id"),
+      inverseJoinColumns = @JoinColumn(name = "activity_id")
+  )
+  private Set<ActivityModel> activities;
+  @ManyToMany
+  @JoinTable(
       name = "user_jobs",
       joinColumns = @JoinColumn(name = "job_id"),
       inverseJoinColumns = @JoinColumn(name = "user_id")
   )
   private Set<UserModel> users;
+
+  public JobModel ( String title , String description , Integer os , String status , LocalDateTime createdAt , LocalDateTime updatedAt , Set < ActivityModel > activities , Set < UserModel > users ) {
+    this.title = title;
+    this.description = description;
+    this.os = os;
+    this.status = status;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+    this.activities = activities;
+    this.users = users;
+  }
 
   public Set<UserModel> getUsers () {
     return users;
@@ -47,15 +65,6 @@ public class JobModel {
     this.users = users;
   }
 
-  public JobModel ( String title, String description, Integer os, String status, LocalDateTime createdAt, LocalDateTime updatedAt, Set<UserModel> users ) {
-    this.title = title;
-    this.description = description;
-    this.os = os;
-    this.status = status;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-    this.users = users;
-  }
 
   public JobModel () {}
 
@@ -73,6 +82,14 @@ public class JobModel {
 
   public void setTitle ( String title ) {
     this.title = title;
+  }
+
+  public Set < ActivityModel > getActivities ( ) {
+    return activities;
+  }
+
+  public void setActivities ( Set < ActivityModel > activities ) {
+    this.activities = activities;
   }
 
   public String getDescription () {

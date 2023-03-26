@@ -1,7 +1,7 @@
 package bcoder.securityApp.repository;
 
-import bcoder.securityApp.model.JobModel;
+import bcoder.securityApp.model.ActivityModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ActivityRepository extends JpaRepository<JobModel, Long> {
+public interface ActivityRepository extends JpaRepository< ActivityModel, Long> {
 }
