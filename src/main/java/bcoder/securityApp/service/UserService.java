@@ -1,5 +1,6 @@
 package bcoder.securityApp.service;
 
+import bcoder.securityApp.dto.UserJobDTO;
 import bcoder.securityApp.dto.UserUpdateDTO;
 import bcoder.securityApp.model.UserModel;
 import bcoder.securityApp.repository.UserRepository;
@@ -7,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -43,4 +44,11 @@ public class UserService {
     userRepository.deleteById(id);
   }
 
+  public List<UserJobDTO> getUsersWithJobs(){
+   return userRepository.findAllWithJobs();
+  }
+
 }
+
+
+

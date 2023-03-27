@@ -16,8 +16,8 @@ public class StaffService {
 
   public StaffService ( UserService userService, PasswordEncoder passwordEncoder ) {
     this.userService = userService;
-    this.passwordEncoder = passwordEncoder;
-  }
+    this.passwordEncoder = passwordEncoder;  }
+
 
   public List<UserModel> listUsers (){
     return userService.listUsers ();
@@ -53,7 +53,7 @@ public class StaffService {
     } catch (Exception exception) {
       return ResponseEntity
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body( "An exception occurred due to " + exception.getMessage ());
+          .body( "An exception occurred due to " + exception.getMessage () + " , please verify if the user has linked Jobs.");
     }
   }
 }
