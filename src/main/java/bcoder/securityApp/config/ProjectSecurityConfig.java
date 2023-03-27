@@ -20,8 +20,10 @@ import java.util.Collections;
 @Configuration
 public class ProjectSecurityConfig {
 
-  public static final String[] ENDPOINTS_AUTHORIZED = {
+  public static final String[] ENDPOINTS_STAFF_ONLY = {
       "/admin/**",
+  };
+  public static final String[] ENDPOINTS_USERS = {
       "/jobs/**",
       "/users/**"
   };
@@ -50,7 +52,8 @@ public class ProjectSecurityConfig {
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .authorizeHttpRequests()
-        .requestMatchers(ENDPOINTS_AUTHORIZED).authenticated()
+        .requestMatchers(ENDPOINTS_STAFF_ONLY).hasAuthority("staff")
+        .requestMatchers(ENDPOINTS_USERS).hasAnyAuthority("staff", "USER")
         .requestMatchers(ENDPOINTS_PERMIT_ALL).permitAll()
         .and().formLogin()
         .and().httpBasic();
