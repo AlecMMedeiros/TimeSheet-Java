@@ -34,7 +34,7 @@ public class StaffController {
     return staffService.removeUser(id);
   }
 
-  @GetMapping("/users/test")
+  @GetMapping("/users/jobs")
   public List<UserJobDTO> getUsersWithJobs() {
     return userService.getUsersWithJobs();
   }

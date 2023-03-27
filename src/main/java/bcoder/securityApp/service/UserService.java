@@ -26,6 +26,10 @@ public class UserService {
     return ResponseEntity.status(HttpStatus.OK).body(userRepository.findByEmail(email));
   }
 
+  public ResponseEntity<List<Object[]>> currentJobs ( String email){
+    return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAllWithJobsRawByEmail(email));
+  }
+
   public UserModel findUserByEmail (String email){
     return userRepository.findByEmail(email);
   }
@@ -34,10 +38,11 @@ public class UserService {
     return userRepository.save(newUser);
   }
 
-  public void updateUser( String email, UserUpdateDTO request) {
+  public ResponseEntity<UserModel> updateUser( String email, UserUpdateDTO request) {
     UserModel user = userRepository.findByEmail(email);
     user.setDisplayName(request.getDisplayName());
     userRepository.save(user);
+    return ResponseEntity.status(HttpStatus.CREATED).body(user);
   }
 
   public void removeUser (Long id){

@@ -26,6 +26,11 @@ public class JobController {
   public ResponseEntity createJob( @RequestBody JobModel job, Principal principal) {
     return jobService.createJob( job, principal.getName());
   }
+
+  @DeleteMapping("/remove")
+  public ResponseEntity<String> removeJob (@RequestBody Long id){
+    return jobService.removeJob(id);
+  }
 }
 
 

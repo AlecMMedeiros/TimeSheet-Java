@@ -39,11 +39,11 @@ public class JobService {
     ResponseEntity response;
     try {
       UserModel user = userService.findUserByEmail(userEmail);
-      ActivityModel newActivity;
+
       Set<UserModel> users = new HashSet<>();
       users.add(user);
       for ( ActivityModel activity : job.getActivities ( ) ) {
-        newActivity = activityService.simpleSaving ( activity );
+       activityService.simpleSaving ( activity );
       }
       job.setStatus("Awaiting");
       job.setUsers(users);
@@ -55,6 +55,20 @@ public class JobService {
           .body ( "An exception occurred due to " + exception.getMessage () );
     }
     return response;
+  }
+
+  public ResponseEntity<String> removeJob(Long id){
+    Optional<JobModel> job = jobRepository.findById(id);
+    try{
+      if( job.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Job Not Found");
+      }else {
+        jobRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Job removed from Database");
+      }
+    }catch (Exception exception) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body( "An exception occurred due to " + exception.getMessage () );
+    }
   }
 }
 

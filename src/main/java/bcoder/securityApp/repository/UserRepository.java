@@ -5,6 +5,7 @@ import bcoder.securityApp.model.JobModel;
 import bcoder.securityApp.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +19,12 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
   List<Object[]> findAllWithJobsRaw();
 
 
-  public default List<UserJobDTO> findAllWithJobs () {
+  default List<UserJobDTO> findAllWithJobs () {
     List<Object[]> rawResults = findAllWithJobsRaw();
+    return getUserJobDTOS(rawResults);
+  }
+
+  private List<UserJobDTO> getUserJobDTOS ( List<Object[]> rawResults ) {
     Map<UserModel, List<JobModel>> groupedResults = new HashMap<>();
 
     for (Object[] row : rawResults) {
@@ -39,5 +44,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     return userJobDTOs;
   }
+
+  @Query("SELECT u, j FROM UserModel u JOIN UserJobModel uj ON uj.user = u JOIN JobModel j ON uj.job = j WHERE u.email = :email")
+  List<Object[]> findAllWithJobsRawByEmail(@Param("email") String email);
+
 
 }
