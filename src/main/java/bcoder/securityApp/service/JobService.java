@@ -3,9 +3,7 @@ package bcoder.securityApp.service;
 import bcoder.securityApp.model.ActivityModel;
 import bcoder.securityApp.model.JobModel;
 import bcoder.securityApp.model.UserModel;
-import bcoder.securityApp.repository.ActivityRepository;
 import bcoder.securityApp.repository.JobRepository;
-import bcoder.securityApp.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,13 +13,13 @@ import java.util.*;
 @Service
 public class JobService {
   private final JobRepository jobRepository;
-  private final UserRepository userRepository;
-  private final ActivityRepository activityRepository;
+  private final UserService userService;
+  private final ActivityService activityService;
 
-  public JobService ( JobRepository jobRepository, UserRepository userRepository , ActivityRepository activityRepository ) {
+  public JobService ( JobRepository jobRepository, UserService userService, ActivityService activityService ) {
     this.jobRepository = jobRepository;
-    this.userRepository = userRepository;
-    this.activityRepository = activityRepository;
+    this.userService = userService;
+    this.activityService = activityService;
   }
 
   public ResponseEntity listJobs() {
@@ -40,14 +38,12 @@ public class JobService {
   public ResponseEntity createJob( JobModel job, String userEmail) {
     ResponseEntity response;
     try {
-      UserModel user = userRepository.findByEmail(userEmail);
+      UserModel user = userService.findUserByEmail(userEmail);
       ActivityModel newActivity;
       Set<UserModel> users = new HashSet<>();
-      Set<ActivityModel> activities = new HashSet<>();
       users.add(user);
       for ( ActivityModel activity : job.getActivities ( ) ) {
-        newActivity = activityRepository.save ( activity );
-        activities.add ( newActivity );
+        newActivity = activityService.simpleSaving ( activity );
       }
       job.setStatus("Awaiting");
       job.setUsers(users);

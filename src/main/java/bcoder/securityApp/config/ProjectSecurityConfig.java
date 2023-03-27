@@ -11,7 +11,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -23,7 +22,8 @@ public class ProjectSecurityConfig {
 
   public static final String[] ENDPOINTS_AUTHORIZED = {
       "/admin/**",
-      "/jobs/**"
+      "/jobs/**",
+      "/users/**"
   };
 
   public static final String[] ENDPOINTS_PERMIT_ALL = {
