@@ -2,6 +2,7 @@ package bcoder.securityApp.controller;
 
 import bcoder.securityApp.model.JobModel;
 import bcoder.securityApp.service.JobService;
+import bcoder.securityApp.service.interfaces.IJobServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/jobs")
 public class JobController {
-  private final JobService jobService;
+  private final IJobServices jobService;
 
 
   public JobController ( JobService jobService) {
@@ -18,12 +19,12 @@ public class JobController {
   }
 
   @GetMapping
-  public ResponseEntity listJobs(){
+  public ResponseEntity<?> listJobs(){
     return jobService.listJobs();
   }
 
   @PostMapping("/register")
-  public ResponseEntity createJob( @RequestBody JobModel job, Principal principal) {
+  public ResponseEntity<?> createJob( @RequestBody JobModel job, Principal principal) {
     return jobService.createJob( job, principal.getName());
   }
 

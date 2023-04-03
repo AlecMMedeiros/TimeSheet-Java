@@ -4,6 +4,7 @@ import bcoder.securityApp.model.ActivityModel;
 import bcoder.securityApp.model.JobModel;
 import bcoder.securityApp.model.UserModel;
 import bcoder.securityApp.repository.JobRepository;
+import bcoder.securityApp.service.interfaces.IJobServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class JobService {
+public class JobService implements IJobServices {
   private final JobRepository jobRepository;
   private final UserService userService;
   private final ActivityService activityService;
@@ -22,8 +23,8 @@ public class JobService {
     this.activityService = activityService;
   }
 
-  public ResponseEntity listJobs() {
-    ResponseEntity response;
+  public ResponseEntity<?> listJobs() {
+    ResponseEntity<?> response;
     try {
       List<JobModel> jobs = jobRepository.findAll ();
       response = ResponseEntity.status(HttpStatus.OK).body(jobs);
@@ -35,8 +36,8 @@ public class JobService {
     return response;
   }
 
-  public ResponseEntity createJob( JobModel job, String userEmail) {
-    ResponseEntity response;
+  public ResponseEntity<?> createJob( JobModel job, String userEmail) {
+    ResponseEntity<?> response;
     try {
       UserModel user = userService.findUserByEmail(userEmail);
 

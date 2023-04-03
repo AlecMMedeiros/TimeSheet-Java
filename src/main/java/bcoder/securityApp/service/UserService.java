@@ -4,6 +4,7 @@ import bcoder.securityApp.dto.UserJobDTO;
 import bcoder.securityApp.dto.UserUpdateDTO;
 import bcoder.securityApp.model.UserModel;
 import bcoder.securityApp.repository.UserRepository;
+import bcoder.securityApp.service.interfaces.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
   private final UserRepository userRepository;
 
   public UserService ( UserRepository userRepository) {

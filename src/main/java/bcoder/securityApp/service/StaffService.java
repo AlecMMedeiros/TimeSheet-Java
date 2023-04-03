@@ -1,6 +1,7 @@
 package bcoder.securityApp.service;
 
 import bcoder.securityApp.model.UserModel;
+import bcoder.securityApp.service.interfaces.IStaffService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StaffService {
+public class StaffService implements IStaffService {
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
 
@@ -23,9 +24,9 @@ public class StaffService {
     return userService.listUsers ();
   }
 
-  public ResponseEntity createUser( UserModel newUser ) {
+  public ResponseEntity<?> createUser( UserModel newUser ) {
     UserModel savedUser;
-    ResponseEntity response = null;
+    ResponseEntity<?> response = null;
     try {
       String hashPwd = passwordEncoder.encode ( newUser.getPassword () );
       newUser.setPassword ( hashPwd );
